@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BookWorld — Online Book Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>📦 Free shipping on orders over $30 &nbsp;|&nbsp; 3-day delivery guaranteed</span>
+  <div class="topbar-right">
+    <span>Support: -BOOKWORLD</span>
+    <a href="#" onclick="openLogin();return false">Sign In</a>
+  </div>
+</div>
+
+<!-- MAIN HEADER -->
+<header>
+  <div class="header-main">
+    <!-- Logo -->
+    <div>
+      <a href="#" class="logo">BOOK<em>WORLD</em></a>
+      <span class="logo-sub">Online Book Shop</span>
+    </div>
+
+    <!-- Search -->
+    <div class="header-search">
+      <input type="text" id="searchInput" placeholder="Search by title, author, or genre..." oninput="filterBooks()"/>
+      <button class="header-search-btn">🔍</button>
+    </div>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <button class="hdr-btn" onclick="openLogin()">
+        <span class="hdr-btn-icon">👤</span>
+        <span class="hdr-btn-label">Account</span>
+      </button>
+      <button class="hdr-btn" onclick="showToast('Wishlist coming soon!')">
+        <span class="hdr-btn-icon">🤍</span>
+        <span class="hdr-btn-label">Wishlist</span>
+      </button>
+      <button class="hdr-btn hdr-cart" onclick="toggleCart()">
+        <span class="hdr-btn-icon">🛒</span>
+        <span class="hdr-btn-label">Cart</span>
+        <span class="cart-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV BAR -->
+  <div class="header-nav">
+    <div class="header-nav-inner">
+      <button class="nav-link active" onclick="setGenre('All',this)">All Books</button>
+      <div class="nav-divider"></div>
+      <button class="nav-link" onclick="setGenre('Fiction',this)">Fiction</button>
+      <button class="nav-link" onclick="setGenre('Mystery',this)">Mystery</button>
+      <button class="nav-link" onclick="setGenre('Fantasy',this)">Fantasy</button>
+      <button class="nav-link" onclick="setGenre('Science',this)">Science</button>
+      <button class="nav-link" onclick="setGenre('History',this)">History</button>
+      <button class="nav-link" onclick="setGenre('Self-Help',this)">Self-Help</button>
+      <div class="nav-divider"></div>
+      <button class="nav-link" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">📖 Book of the Month</button>
+      <span class="nav-promo">🏷️ Sale — Up to 40% off</span>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-tag">✨ 12,000+ titles in stock</span>
+      <h1>Your next great<br/><em>adventure</em><br/>starts here</h1>
+      <p>Discover bestsellers, hidden gems, and timeless classics — curated for every kind of reader.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('books').scrollIntoView({behavior:'smooth'})">Browse Collection</button>
+        <button class="btn-outline" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">This Month's Pick</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hv-book" style="width:50px;height:210px;background:#4a6741">The Forest Letters</div>
+      <div class="hv-book" style="width:50px;height:255px;background:#c8752a">Midnight Atlas</div>
+      <div class="hv-book" style="width:50px;height:185px;background:#8a4e18">The Last Signal</div>
+      <div class="hv-book" style="width:50px;height:235px;background:#2d1f4a">Ocean of Stars</div>
+      <div class="hv-book" style="width:50px;height:200px;background:#1a3a2a">Ember & Rain</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-num">12,400+</div><div class="stat-label">Books in stock</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Happy customers</div></div>
+    <div class="stat"><div class="stat-num">3-day</div><div class="stat-label">Fast delivery</div></div>
+    <div class="stat"><div class="stat-num">340+</div><div class="stat-label">New arrivals monthly</div></div>
+  </div>
+</div>
+
+<!-- BOOKS -->
+<section id="books">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Our Collection</h2>
+      <a href="#">View all &rarr;</a>
+    </div>
+    <div class="books-grid" id="booksGrid"></div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section id="featured" style="background:var(--cream);padding-top:0">
+  <div class="section-inner">
+    <div class="featured-banner">
+      <div>
+        <div class="featured-tag">⭐ Book of the Month</div>
+        <h3>The Cartographer<br/>of Lost Places</h3>
+        <p>A sweeping historical epic spanning three continents and two centuries. Winner of the 2024 Golden Pen Award.</p>
+        <div style="display:flex;align-items:center;gap:0;margin-bottom:22px">
+          <span class="featured-price">$14.99</span>
+          <span class="featured-old-price">$24.99</span>
+          <span style="background:#c0392b;color:#fff;font-size:0.7rem;font-weight:700;padding:3px 9px;border-radius:5px;margin-left:14px">40% OFF</span>
+        </div>
+        <button class="btn-primary" onclick="addToCart({id:99,title:'The Cartographer of Lost Places',author:'Elena Vasquez',price:14.99,genre:'History',color:'#2d4a6a',stars:5})">Add to Cart</button>
+      </div>
+      <div class="featured-book-image">
+        <img src="image/pic13.jpeg" alt="The Cartographer of Lost Places">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-head"><h2>What readers say</h2></div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"BookWorld is my go-to bookshop. The selection is incredible and delivery is always on time. I've discovered so many amazing authors here."</p>
+        <div class="t-author"><div class="t-avatar" style="background:#4a6741">SR</div><div><div class="t-name">Sarah R.</div><div class="t-role">Book club organizer</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Best prices I've found online. The genre filter makes it so easy to find exactly what I'm in the mood for. Highly recommend!"</p>
+        <div class="t-author"><div class="t-avatar" style="background:#c8752a">MK</div><div><div class="t-name">Michael K.</div><div class="t-role">Literature teacher</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="t-stars">★★★★☆</div>
+        <p class="t-quote">"I ordered 6 books and they arrived perfectly packaged within 2 days. The website is clean and easy to use. Will definitely order again."</p>
+        <div class="t-author"><div class="t-avatar" style="background:#2d4a8a">LP</div><div><div class="t-name">Layla P.</div><div class="t-role">Student</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <h2>Stay in the story</h2>
+    <p>Weekly book picks, exclusive discounts, and new arrival alerts — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" id="nlEmail" placeholder="your@email.com"/>
+      <button onclick="subscribe()">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">Book<em>World</em></span>
+        <p>Your cozy corner of the internet for discovering, buying, and falling in love with books.</p>
+      </div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="#">New Arrivals</a></li><li><a href="#">Bestsellers</a></li><li><a href="#">Fiction</a></li><li><a href="#">Non-Fiction</a></li><li><a href="#">Children's</a></li></ul></div>
+      <div class="footer-col"><h4>Account</h4><ul><li><a href="#" onclick="openLogin();return false">Sign In</a></li><li><a href="#" onclick="openRegister();return false">Register</a></li><li><a href="#">My Orders</a></li><li><a href="#">Wishlist</a></li></ul></div>
+      <div class="footer-col"><h4>Help</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQ</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 BookWorld Book Shop. All rights reserved.</span>
+      <span>Made with ❤️ for book lovers</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCartOnBg(event)">
+  <div class="cart-panel">
+    <div class="cart-header">
+      <h3>🛒 Your Cart</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div id="cartItems"></div>
+    <div id="cartTotal"></div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginOverlay" onclick="closeModalOnBg(event,'loginOverlay')">
+  <div class="login-modal" onclick="event.stopPropagation()">
+    <div class="login-header">
+      <button class="modal-close-btn" onclick="closeLogin()">✕</button>
+      <div class="login-header-logo">📚 BookWorld</div>
+      <p>Your personal book library awaits</p>
+    </div>
+    <div class="login-tabs">
+      <button class="login-tab active" onclick="switchTab('login',this)">Sign In</button>
+      <button class="login-tab" onclick="switchTab('register',this)">Create Account</button>
+    </div>
+    <div class="login-body">
+      <!-- SIGN IN -->
+      <div class="tab-panel active" id="tab-login">
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-input" placeholder="you@example.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" placeholder="Enter your password"/>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:0.8rem">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" style="accent-color:var(--amber)"/> Remember me</label>
+          <a href="#" style="color:var(--amber);font-weight:600">Forgot password?</a>
+        </div>
+        <button class="form-submit" onclick="handleLogin()">Sign In →</button>
+        <div class="form-divider">or continue with</div>
+        <div class="social-btns">
+          <button class="social-btn" onclick="showToast('Google login coming soon!')">🌐 Google</button>
+          <button class="social-btn" onclick="showToast('Facebook login coming soon!')">📘 Facebook</button>
+        </div>
+        <div class="form-footer">Don't have an account? <a onclick="switchTab('register',document.querySelectorAll('.login-tab')[1])">Sign up free</a></div>
+      </div>
+      <!-- REGISTER -->
+      <div class="tab-panel" id="tab-register">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First name</label><input type="text" class="form-input" placeholder="John"/></div>
+          <div class="form-group"><label class="form-label">Last name</label><input type="text" class="form-input" placeholder="Doe"/></div>
+        </div>
+        <div class="form-group"><label class="form-label">Email address</label><input type="email" class="form-input" placeholder="you@example.com"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" placeholder="Min. 8 characters"/></div>
+        <div class="form-group"><label class="form-label">Confirm password</label><input type="password" class="form-input" placeholder="Repeat password"/></div>
+        <div style="font-size:0.78rem;color:var(--gray);margin-bottom:12px">By creating an account you agree to our <a href="#" style="color:var(--amber)">Terms of Service</a> and <a href="#" style="color:var(--amber)">Privacy Policy</a>.</div>
+        <button class="form-submit" onclick="handleRegister()">Create Account →</button>
+        <div class="form-footer">Already have an account? <a onclick="switchTab('login',document.querySelectorAll('.login-tab')[0])">Sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="detailOverlay" onclick="closeModalOnBg(event,'detailOverlay')">
+  <div class="detail-modal" onclick="event.stopPropagation()">
+    <div class="detail-inner">
+      <div class="detail-cover" id="detailCover"></div>
+      <div class="detail-info" id="detailInfo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+<script src="script.js"></script>
+</body>
+</html>
